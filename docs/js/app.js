@@ -61,60 +61,11 @@ App = {
     App.student = await App.contracts.Student.deployed()
   },
   render: async () => {
-    var role=await App.student.roles(App.account);
-    window.alert(role);
-    if(role=="1"){
-      $("#studentdashboard").show();
-      $("#teacherdashboard").hide();
-      $("#officedashboard").hide();
-      $("#registerpage").hide();
-    }
-    else if(role=="2"){
-      $("#studentdashboard").hide();
-      $("#teacherdashboard").show();
-      $("#officedashboard").hide();
-      $("#registerpage").hide();
-    }
-    else if(role=="3"){
-      $("#studentdashboard").hide();
-      $("#teacherdashboard").hide();
-      $("#officedashboard").show();
-      $("#registerpage").hide();
-    }
-    else{
-      $("#studentdashboard").hide();
-      $("#teacherdashboard").hide();
-      $("#officedashboard").hide();
-      $("#registerpage").show();
-    }
-  }  ,
-  showData: async ()=>{
-    await App.loadWeb3()
-    await App.loadAccount()
-    await App.loadContract()
-    await App.render();
-  }  ,
-  updateValues :async () =>{
-    var roles=$("#roles").val();      
-    await App.student.registerUser(roles,{from :App.account});
-    await App.render();   
-  },
-  showRegisterPage :async ()=>{
-   // $("#registerpage").show();
-    $("#viewpage").hide();
-  },
-  showViewPage :async ()=>{
-    $("#registerpage").hide();
-    $("#viewpage").show();
-    $("#disp").empty();
-    var total=await App.student.totalUsers();
-    for(var i=1;i<=total;i++){
-      var st=await App.student.users(parseInt(i));
-      var str="<tr><td>"+st[0]+"</td><td>"+st[1]+"</td><td>"+st[2]+"</td></tr>";
-       $("#disp").append(str);
-    }
-
-  }
+    var msg=await App.student.str();
+    $("#disp").html(msg)    
+  }  
+ 
+ 
 }
 
 $(document).ready(async function(){
